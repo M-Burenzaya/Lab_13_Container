@@ -122,6 +122,21 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_POST['show_data'])) {
 
+        $result = $mysqli->query("SELECT ui.img_id, ui.user_id, ui.img_data, u.name AS user_name FROM user_img ui INNER JOIN users u ON ui.user_id = u.id");
+        
+        echo '<div style="display: flex; align-items: center; width: 60%; margin: auto;">';
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo '<div style="margin: auto;">';
+                echo '<p>User Name: ' . $row['user_name'] . '</p>';
+                echo '<img src="data:image/jpeg;base64,' . base64_encode($row['img_data']) . '" />';
+                echo '</div>';
+            }
+        } else {
+            echo '<p>No images found</p>';
+        }
+        echo '</div>';
+        
         echo "<h1>Users</h1>";
         $resultUsers = $mysqli->query("SELECT * FROM users");
         while ($row = $resultUsers->fetch_assoc()) {
@@ -132,18 +147,6 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
         $resultOrders = $mysqli->query("SELECT * FROM orders");
         while ($row = $resultOrders->fetch_assoc()) {
             echo "<p>Захиалгын ID: {$row['id']}, Хэрэглэгчийн ID: {$row['user_id']}, Барааны нэр: {$row['product_name']}</p>";
-        }
-
-        $result = $mysqli->query("SELECT img_id, user_id FROM user_img");
-
-        $result = $mysqli->query("SELECT img_data FROM user_img");
-
-        if ($result && $result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo '<img src="data:image/jpeg;base64,' . base64_encode($row['img_data']) . '" />';
-            }
-        } else {
-            echo 'No images found';
         }
     }
 }
