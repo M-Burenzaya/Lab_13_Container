@@ -128,8 +128,8 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($result && $result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo '<div style="margin: auto;">';
-                echo '<p>User Name: ' . $row['user_name'] . '</p>';
-                echo '<img src="data:image/jpeg;base64,' . base64_encode($row['img_data']) . '" />';
+                echo '<p>Нэр: ' . $row['user_name'] . '</p>';
+                echo '<img src="data:image/jpeg;base64,' . base64_encode($row['img_data']) . '" style="border-radius: 10px;" />';
                 echo '</div>';
             }
         } else {
