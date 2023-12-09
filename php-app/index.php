@@ -36,7 +36,6 @@ $mysqli->query("CREATE TABLE IF NOT EXISTS user_img (
     FOREIGN KEY (user_id) REFERENCES users(id)
 )");
 
-//Inserting data
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_POST['submit_user'])) {
@@ -72,6 +71,23 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
             $imgTmpName = $_FILES['imageUpload']['tmp_name'];
             $imgData = file_get_contents($imgTmpName);
 
+            $originalImage = imagecreatefromstring(file_get_contents($imgTmpName));
+
+            $width = imagesx($originalImage);
+            $height = imagesy($originalImage);
+
+            $newWidth = 200;
+            $newHeight = 200;
+
+            $resizedImage = imagecreatetruecolor($newWidth, $newHeight);
+
+            imagecopyresampled($resizedImage, $originalImage, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+            $compressedImage = 'compressed_image.jpg';
+            imagejpeg($resizedImage, $compressedImage, 75);
+
+            $imgData = file_get_contents($compressedImage);
+
             $stmt = $mysqli->prepare("INSERT INTO user_img (user_id, img_data) VALUES (?, ?)");
             $stmt->bind_param("is", $user_id, $imgData);
             $stmt->execute();
@@ -81,6 +97,10 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 echo "Алдаа_1" . $mysqli->error;
             }
+
+            imagedestroy($originalImage);
+            imagedestroy($resizedImage);
+            unlink($compressedImage);
         } else {
             echo "Алдаа_2";
         }
@@ -113,7 +133,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
         while ($row = $resultOrders->fetch_assoc()) {
             echo "<p>Захиалгын ID: {$row['id']}, Хэрэглэгчийн ID: {$row['user_id']}, Барааны нэр: {$row['product_name']}</p>";
         }
-        
+
         $result = $mysqli->query("SELECT img_id, user_id FROM user_img");
 
         $result = $mysqli->query("SELECT img_data FROM user_img");
