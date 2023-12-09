@@ -2,47 +2,51 @@
 <html>
 <head>
     <title>Өгөгдөл авах хуудас</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <form method="post" action="index.php">
-        <h2>Хэрэглэгчийн мэдээлэл</h2>
-        <label for="name">Нэр:</label>
-        <input type="text" id="name" name="name" required autocomplete="off">
-
-        <label for="email">И-майл:</label>
-        <input type="email" id="email" name="email" required autocomplete="off">
-
-        <input type="submit" name="submit_user" value="Оруулах">
-    </form>
+    <div id="form_container">
+        <form method="post" action="index.php" class="form_elm">
+            <h2>Хэрэглэгчийн мэдээлэл</h2>
+            <label for="name">Нэр:</label>
+            <input type="text" id="name" name="name" required autocomplete="off">
     
-    <form method="post" action="index.php" enctype="multipart/form-data">
-        <h2>Хэрэглэгчийн зураг</h2>
-        <label for="user_id">Хэрэглэгчийн ID:</label>
-        <input type="text" id="user_id" name="user_id" required autocomplete="off">
+            <label for="email">И-майл:</label>
+            <input type="email" id="email" name="email" required autocomplete="off">
+    
+            <input type="submit" name="submit_user" value="Оруулах" class="form_button">
+        </form>
         
-        <label for="imageUpload">Зурагаа сонгоно уу</label>
-        <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
-        <input type="submit" name="submit_img" value="Оруулах">
-    </form>
-
-    <form method="post" action="index.php">
-        <h2>Захиалгын мэдээлэл</h2>
-        <label for="user_id">Хэрэглэгчийн ID:</label>
-        <input type="text" id="user_id" name="user_id" required autocomplete="off">
+        <form method="post" action="index.php" enctype="multipart/form-data" class="form_elm">
+            <h2>Хэрэглэгчийн зураг</h2>
+            <label for="user_id">Хэрэглэгчийн ID:</label>
+            <input type="text" id="user_id" name="user_id" required autocomplete="off">
+            
+            <label for="imageUpload">Зурагаа сонгоно уу</label>
+            <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
+            <input type="submit" name="submit_img" value="Оруулах" class="form_button">
+        </form>
+    
+        <form method="post" action="index.php" class="form_elm">
+            <h2>Захиалгын мэдээлэл</h2>
+            <label for="user_id">Хэрэглэгчийн ID:</label>
+            <input type="text" id="user_id" name="user_id" required autocomplete="off">
+            
+            <label for="product_name">Барааны нэр:</label>
+            <input type="text" id="product_name" name="product_name" required autocomplete="off">
+    
+            <input type="submit" name="submit_order" value="Оруулах" class="form_button">
+        </form>
+    </div>
+    
+    <div id="button_container">
+        <form method="post" action="index.php">
+            <input type="submit" name="show_data" value="Бүх датаг харуулах" class="form_button">
+        </form>
         
-        <label for="product_name">Барааны нэр:</label>
-        <input type="text" id="product_name" name="product_name" required autocomplete="off">
-
-        <input type="submit" name="submit_order" value="Оруулах">
-    </form>
-
-    <form method="post" action="index.php">
-        <input type="submit" name="show_data" value="Бүх датаг харуулах">
-    </form>
-    
-    <form method="post" action="index.php">
-        <input type="submit" name="clear_data" value="Бүх датаг устгах">
-    </form>
-    
+        <form method="post" action="index.php">
+            <input type="submit" name="clear_data" value="Бүх датаг устгах" class="form_button">
+        </form>
+    </div>
 </body>
 </html>
